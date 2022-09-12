@@ -28,12 +28,12 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=CASCADE)
+    category = models.ForeignKey(Category, on_delete='CASCADE')
     name = models.CharField(max_length=50)
 
-class ProductInfo(modesl.Model):
-    product = models.ForeignKey(Product, on_delete=CASCADE)
-    shop = models.ForeignKey(Shop, on_delete=CASCADE)
+class ProductInfo(models.Model):
+    product = models.ForeignKey(Product, on_delete='CASCADE')
+    shop = models.ForeignKey(Shop, on_delete='CASCADE')
     name = models.CharField(max_length=50)
     quantity = models.IntegerField()
     price = models.FloatField()
@@ -43,24 +43,24 @@ class Parameter(models.Model):
     name = models.CharField(max_length=50)
 
 class ProductParameter(models.Model):
-    product_info = models.ForeignKey(on_delete=CASCADE)
+    product_info = models.ForeignKey(ProductInfo, on_delete='CASCADE')
     parameter = models.CharField(max_length=50)
     value = models.CharField(max_length=50, null=False)
 
 class Order(models.Model):
-    user = models.ForeignKey('User', on_delete=CASCADE)
+    user = models.ForeignKey('User', on_delete='CASCADE')
     dt = models.DateField(auto_now=True)
     status = models.CharField(max_length=50, default='new', choices=STATE_CHOICES)
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=CASCADE)
-    product = models.ForeignKey(Product, on_delete=CASCADE)
-    shop = models.ForeignKey(Shop, on_delete=CASCADE)
+    order = models.ForeignKey(Order, on_delete='CASCADE')
+    product = models.ForeignKey(Product, on_delete='CASCADE')
+    shop = models.ForeignKey(Shop, on_delete='CASCADE')
     quantity = models.IntegerField(null=False)
 
 class Contact(models.Model):
     type = models.CharField(max_length=50)
-    user = models.ForeignKey('User', on_delete=CASCADE)
+    user = models.ForeignKey('User', on_delete='CASCADE')
     value = models.CharField(max_length=255)
 
 class User(AbstractUser):
