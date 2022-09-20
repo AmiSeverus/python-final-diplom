@@ -19,13 +19,11 @@ USER_TYPES = (
 )
 
 class Shop(models.Model):
-    name = models.CharField(max_length=50)
-    url = models.URLField()
-    filename = models.CharField(max_length=255)
+    name = models.CharField(max_length=50, unique=True)
 
 class Category(models.Model):
     shops = models.ManyToManyField(Shop, related_name='categories')
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete='CASCADE')
@@ -34,13 +32,13 @@ class Product(models.Model):
 class ProductInfo(models.Model):
     product = models.ForeignKey(Product, on_delete='CASCADE')
     shop = models.ForeignKey(Shop, on_delete='CASCADE')
-    name = models.CharField(max_length=50)
+    model = models.CharField(max_length=50)
     quantity = models.IntegerField()
     price = models.FloatField()
     price_rrc = models.FloatField()
 
 class Parameter(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
 class ProductParameter(models.Model):
     product_info = models.ForeignKey(ProductInfo, on_delete='CASCADE')
