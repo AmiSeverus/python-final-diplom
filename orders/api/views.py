@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from api.permissions import IsClient, IsSeller
-from api.models import Shop, Category, Product, ProductInfo, Parameter, ProductParameter
+from api.models import Shop, Category, Product, ProductInfo, Parameter, ProductParameter, Order
 from yaml import load as load_yaml, Loader
 import pprint
 
@@ -60,3 +60,10 @@ class UpdateShop(CustomAPIView):
             except yaml.YAMLError as exc:
                 return Response({'status':'Error', 'message': exc})
         return Response({'status':'OK'})
+
+class BasketView(CustomAPIView):
+
+    permission_classes = {[permissions.IsAuthenticated, isClient]}
+
+    def get(self, request, *args, *kwargs):
+        basket = Order.objects.filter(user_id=request.user.id, state='basket')

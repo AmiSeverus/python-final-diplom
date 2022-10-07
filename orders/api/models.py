@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 STATE_CHOICES = (
-    # ('basket', 'Статус корзины'),
+    ('basket', 'Статус корзины'),
     ('new', 'Новый'),
     ('confirmed', 'Подтвержден'),
     ('assembled', 'Собран'),
